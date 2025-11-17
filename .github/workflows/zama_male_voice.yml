@@ -1,0 +1,29 @@
+name: Free Male Voice Video
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-video:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install FFmpeg + fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+
+      - name: Install Python deps
+        run: pip install -r requirements.txt
+
+      - name: Generate Video
+        run: python zama_video_male_free.py
+
+      - name: Upload Video
+        uses: actions/upload-artifact@v4
+        with:
+          name: zama-free-male-video
+          path: zama_explainer_male.mp4
